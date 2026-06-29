@@ -538,9 +538,9 @@
 
         // 特殊直达种族（无特征向量，直接命中）
         const SPECIAL_RACES = {
-            "厄运种": { name: "厄运种", img: "https://img.cdn1.vip/i/6a426b9a7dc44_1782737818.webp", desc: "每日随机突变，极不稳定。", genes: ["灾难性不稳定突变"] },
-            "觉醒人形": { name: "觉醒人形", img: "https://img.cdn1.vip/i/6a426b9f74871_1782737823.webp", desc: "产生自我意识的机械生命。", genes: ["一至多个超凡基因"] },
-            "基础人形": { name: "基础人形", img: "https://img.cdn1.vip/i/6a426ba0d9728_1782737824.webp", desc: "纯粹工具型机械体。", genes: ["异种基因（不可遗传）"] }
+            "厄运种": { name: "厄运种", img: "https://img.cdn1.vip/i/6a426b9a7dc44_1782737818.webp", desc: "厄运种来自模组：Alpha Genes。厄运种是基因工程可怕危险的证明，是由基因检测出错所产生的悲惨畸形生命。你的基因组是如此的反常和不稳定，以至于每天都会发生重复的不受控突变。你每天都有10个不同的随机基因，第二天就被抹去并替换成另外的随机10个，唯一不变的是最让你的噩梦持续的，继续随机变化的能力。所幸，有时候这些变化会非常有益，例如在殖民地遭受外敌入侵时你突变成射击超群的战斗人员。但这毕竟是不可控的变异，更多情况是你不幸获得了极高的日光敏感并倒在地上，或者作为一个艺术家的你突变成了艺术无能的人。这些突变甚至有可能是非常致命的，例如细胞失控基因有可能会让你患上癌症。如果突变的间隔降低一些，你有能力凭借自己多变的能力当一个多面手，但就现在而言，你还是用来被抽基因更有用一些。", genes: ["灾难性不稳定突变"] },
+            "觉醒人形": { name: "觉醒人形", img: "https://img.cdn1.vip/i/6a426b9f74871_1782737823.webp", desc: "觉醒人形来自模组：Vanilla Race Expanded-Android。人形拥有几乎与人类相似的外表，靠内部特殊的硬件和子程序来行动，中性胺是他们的血液。身为钢铁之躯，你没有心灵敏感度，不会生病、感染和中毒，由反应堆能量驱动，适温范围广于普通人，但是会部件过冷过热。你的硬盘中缓存空间有限，在缓存空间耗尽时需要重新格式化。和基础人形相比，你经历了强烈的情感刺激，觉醒并产生了属于自己的人格与意识。你像人类一样会精神崩溃，也会在心情好时产生灵感。虽然你无法生育孩子，但是你仍然可以与人类恋爱。你不像基础人形，你和人类几乎没有区别，因此人类能胜任的工作你都能胜任——甚至有时候比他们干的更好。", genes: ["一至多个超凡基因"] },
+            "基础人形": { name: "基础人形", img: "https://img.cdn1.vip/i/6a426ba0d9728_1782737824.webp", desc: "基础人形来自模组：Vanilla Race Expanded-Android。人形拥有几乎与人类相似的外表，靠内部特殊的硬件和子程序来行动，中性胺是他们的血液。身为钢铁之躯，你没有心灵敏感度，不会生病、感染和中毒，由反应堆能量驱动，适温范围广于普通人，但是会部件过冷过热。你的硬盘中缓存空间有限，在缓存空间耗尽时需要重新格式化。你无法理解也不在乎何为舒适、娱乐和美观，但因此你可以在人类无法忍受的艰苦条件下完成任务。你没有任何痛感，也不会像人类一样精神崩溃，但是你无法与人类恋爱或是与动物形成羁绊，也无法获得任何类型的灵感，技能等级永远不会提高。但是相对而言，你比需求多而娇气的人类还是有用许多，我们称其为高效。你可以通过载入技能子程序来灵活应付人类社会中的各种岗位，不管是体力还是脑力劳动都足以胜任。", genes: ["异种基因（不可遗传）"] }
         };
 
         // ================================================================
@@ -1096,10 +1096,22 @@
             document.getElementById('resultImage').src = race.img;
             document.getElementById('resultDesc').innerHTML = race.desc;
 
-            const commonGenes = userGenes.filter(g => g && g.trim() !== '');
-            const geneStr = commonGenes.length ? commonGenes.join('、') : '无明显显性基因';
-            document.getElementById('geneTextCommon').innerHTML = `🧬 你的基因可能有：${geneStr}`;
-            document.getElementById('geneTextSpecial').innerHTML = '';
+            const raceName = race.name;
+            if (raceName === '基础人形') {
+                const hardware = '缓存清理、能量驱动、禁用娱乐需求、禁用美观需求、禁用舒适需求、禁用户外需求、禁用成瘾需求、禁用房间尺寸需求、痛感屏蔽、合成身躯、中性胺循环、合成免疫、部件过冷、部件过热、低温耐性、高温耐性、技能固锁、灵感丧失、心灵失聪、崩溃抑制、心理阻断';
+                document.getElementById('geneTextCommon').innerHTML = `🧬 你的硬件是：${hardware}`;
+                document.getElementById('geneTextSpecial').innerHTML = '';
+            } else if (raceName === '觉醒人形') {
+                const hardware = '缓存清理、能量驱动、合成身躯、中性胺循环、合成免疫、部件过冷、部件过热、低温耐性、高温耐性、心灵失聪';
+                document.getElementById('geneTextCommon').innerHTML = `🧬 你的硬件是：${hardware}`;
+                document.getElementById('geneTextSpecial').innerHTML = '';
+            } else {
+                // 原有逻辑
+                const commonGenes = userGenes.filter(g => g && g.trim() !== '');
+                const geneStr = commonGenes.length ? commonGenes.join('、') : '无明显显性基因';
+                document.getElementById('geneTextCommon').innerHTML = `🧬 你的基因可能有：${geneStr}`;
+                document.getElementById('geneTextSpecial').innerHTML = '';
+            }
 
             const runnerUpList = document.getElementById('runnerUpList');
             runnerUpList.innerHTML = '';
